@@ -6,6 +6,7 @@ export default function EditProduct() {
   const { id } = useParams();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const [previewImage, setPreviewImage] = React.useState("");
 
   const productQuery = useQuery({
     queryKey: ["product", id],
@@ -34,10 +35,15 @@ export default function EditProduct() {
     mutation.mutate({ id, body: updated });
   }
 
+  function handleImageChange(e) {
+    setPreviewImage(e.target.value);
+  }
+
   if (productQuery.isLoading) return <p className="p-6 text-center">Loading...</p>;
   if (productQuery.isError) return <p className="p-6 text-center text-red-500">Error loading product</p>;
 
   const item = productQuery.data;
+  const currentImage = previewImage || item.image || "https://via.placeholder.com/300x300?text=No+Image";
 
   return (
     <div className="p-6 flex justify-center">
@@ -67,11 +73,25 @@ export default function EditProduct() {
         </div>
 
         <div className="mb-4">
+          <label className="font-semibold">Image Preview</label>
+          <img
+            src={currentImage}
+            alt="Preview"
+            className="w-full h-40 object-cover rounded-md mt-2"
+            onError={(e) => {
+              e.target.src = "https://via.placeholder.com/300x300?text=Image+Error";
+            }}
+          />
+        </div>
+
+        <div className="mb-4">
           <label className="font-semibold">Image URL</label>
           <input
             name="image"
             defaultValue={item.image}
+            onChange={handleImageChange}
             className="w-full mt-1 p-2 border rounded-md"
+            placeholder="https://example.com/image.jpg"
           />
         </div>
 

@@ -32,9 +32,12 @@ export default function Products() {
             className="bg-white shadow-md rounded-xl p-4 border text-center"
           >
             <img
-              src={item.image}
+              src={item.image || "https://via.placeholder.com/300x300?text=No+Image"}
               alt={item.title}
               className="w-32 h-32 object-cover mx-auto rounded-md"
+              onError={(e) => {
+                e.target.src = "https://via.placeholder.com/300x300?text=Image+Error";
+              }}
             />
 
             <h3 className="text-xl font-semibold mt-3">{item.title}</h3>

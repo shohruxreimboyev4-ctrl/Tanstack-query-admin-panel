@@ -1,10 +1,12 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { addProduct } from "../api/productsApi";
+import React from "react";
 
 export default function AddProduct() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const [previewImage, setPreviewImage] = React.useState("");
 
   const mutation = useMutation({
     mutationFn: addProduct,
@@ -25,6 +27,10 @@ export default function AddProduct() {
     };
 
     mutation.mutate(newProduct);
+  }
+
+  function handleImageChange(e) {
+    setPreviewImage(e.target.value);
   }
 
   return (
@@ -55,11 +61,32 @@ export default function AddProduct() {
         </div>
 
         <div className="mb-4">
+          <label className="font-semibold">Image Preview</label>
+          {previewImage && (
+            <img
+              src={previewImage}
+              alt="Preview"
+              className="w-full h-40 object-cover rounded-md mt-2"
+              onError={(e) => {
+                e.target.src = "https://via.placeholder.com/300x300?text=Invalid+URL";
+              }}
+            />
+          )}
+          {!previewImage && (
+            <div className="w-full h-40 bg-gray-200 rounded-md mt-2 flex items-center justify-center">
+              <p className="text-gray-500">Image preview...</p>
+            </div>
+          )}
+        </div>
+
+        <div className="mb-4">
           <label className="font-semibold">Image URL</label>
           <input
             name="image"
             required
+            onChange={handleImageChange}
             className="w-full mt-1 p-2 border rounded-md"
+            placeholder="https://example.com/image.jpg"
           />
         </div>
 
