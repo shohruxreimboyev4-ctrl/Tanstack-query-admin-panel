@@ -1,6 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate, useParams } from "react-router-dom";
 import { getProduct, updateProduct } from "../api/productsApi";
+import React from "react";
 
 export default function EditProduct() {
   const { id } = useParams();
@@ -88,7 +89,7 @@ export default function EditProduct() {
           <label className="font-semibold">Image URL</label>
           <input
             name="image"
-            defaultValue={item.image}
+            value={previewImage || item.image || ""}
             onChange={handleImageChange}
             className="w-full mt-1 p-2 border rounded-md"
             placeholder="https://example.com/image.jpg"

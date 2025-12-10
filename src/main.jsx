@@ -1,18 +1,15 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
+import "./index.css";
 
-// Redux
 import { Provider } from "react-redux";
 import { configureStore, createSlice } from "@reduxjs/toolkit";
 
-// TanStack Query
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-// App
 import App from "./App.jsx";
 
-// ===================== Redux slice =====================
 const uiSlice = createSlice({
   name: "ui",
   initialState: {
@@ -27,17 +24,14 @@ const uiSlice = createSlice({
 
 export const { setLoading } = uiSlice.actions;
 
-// ===================== Redux store =====================
 const store = configureStore({
   reducer: {
     ui: uiSlice.reducer,
   },
 });
 
-// ===================== TanStack Query client =====================
 const queryClient = new QueryClient();
 
-// ===================== Render =====================
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter>

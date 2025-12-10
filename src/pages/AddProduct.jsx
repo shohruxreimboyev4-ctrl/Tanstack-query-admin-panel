@@ -68,7 +68,8 @@ export default function AddProduct() {
               alt="Preview"
               className="w-full h-40 object-cover rounded-md mt-2"
               onError={(e) => {
-                e.target.src = "https://via.placeholder.com/300x300?text=Invalid+URL";
+                e.target.src =
+                  "https://via.placeholder.com/300x300?text=Invalid+URL";
               }}
             />
           )}
@@ -83,7 +84,7 @@ export default function AddProduct() {
           <label className="font-semibold">Image URL</label>
           <input
             name="image"
-            required
+            value={previewImage}
             onChange={handleImageChange}
             className="w-full mt-1 p-2 border rounded-md"
             placeholder="https://example.com/image.jpg"
